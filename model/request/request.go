@@ -90,3 +90,21 @@ func ReverseProxyIpFrom(ctx context.Context) (string, bool) {
 	v, ok := ctx.Value(ReverseProxyIp).(string)
 	return v, ok
 }
+
+func AddValues(ctx context.Context) context.Context {
+	keys := []contextKey{
+		User,
+		Username,
+		Client,
+		Version,
+		Player,
+		Transcoding,
+		ClientUniqueId,
+	}
+	for _, key := range keys {
+		if v, ok := ctx.Value(key).(string); ok {
+			ctx = context.WithValue(ctx, key, v)
+		}
+	}
+	return ctx
+}
