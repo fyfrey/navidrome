@@ -91,7 +91,7 @@ func ReverseProxyIpFrom(ctx context.Context) (string, bool) {
 	return v, ok
 }
 
-func AddValues(ctx context.Context) context.Context {
+func AddValues(ctx, requestCtx context.Context) context.Context {
 	keys := []contextKey{
 		User,
 		Username,
@@ -102,7 +102,7 @@ func AddValues(ctx context.Context) context.Context {
 		ClientUniqueId,
 	}
 	for _, key := range keys {
-		if v, ok := ctx.Value(key).(string); ok {
+		if v, ok := requestCtx.Value(key).(string); ok {
 			ctx = context.WithValue(ctx, key, v)
 		}
 	}
